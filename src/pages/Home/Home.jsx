@@ -1,33 +1,43 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useStoreState } from "../../store/hooks.ts";
-import { useNavigate } from "react-router-dom";
+import Toast from "../Component/Toast.component.jsx";
 
 function Home() {
   const [movieList, setMovieList] = useState([]);
   const [searchMovieName, setSearchMovieName] = useState("abc");
   const [favMovieList, setFavMovieList] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null); 
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const { email } = useStoreState((state) => state.loginModel);
-  const navigate = useNavigate();
-
+  
   useEffect(() => {
     fetchData();
-  }, [searchMovieName]); 
+  }, [setMovieList]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowToast(false);
+    }, 10000);
+  }, [showToast]);
 
   async function fetchData() {
+    // header setting
     const options = {
       method: "GET",
-      url: "https://www.omdbapi.com/?",
+      url: "http://www.omdbapi.com/?",
       params: { s: searchMovieName, page: 1, apikey: "7d13a6a5" },
     };
-    try {
-      const response = await axios.request(options);
-      setMovieList(response.data.Search || []);
-      console.log(response.data.Search);
-    } catch (error) {
-      console.error(error);
-    }
+    //api call
+    await axios
+      .request(options)
+      .then(function (response) {
+        setMovieList(response.data.Search);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+    console.log(movieList);
   }
 
   function handleMovieSearchInput(e) {
@@ -35,26 +45,20 @@ function Home() {
   }
 
   function handleMovieSearch() {
-    fetchData(); 
+    fetchData();
   }
-
-  function handleAddToFav(movie) {
-    if (favMovieList.some((fav) => fav.Title === movie.Title)) {
-      alert("Already in list, add another.");
-    } else {
-      setFavMovieList([...favMovieList, movie]);
-      alert("Movie added successfully!");
-    }
+  function handleAddToFav(movieName) {
+    if (!favMovieList.includes(movieName))
+      setFavMovieList([...favMovieList, movieName]);
+    setShowToast(true);
+    setToastMessage("Added to Fav successfully");
   }
 
   function removeFromFav(movieName) {
-    const temp = favMovieList.filter((movie) => movie.Title !== movieName);
+    const temp = favMovieList.filter((movie) => movieName !== movie);
     setFavMovieList(temp);
-    alert("Movie removed successfully!");
-  }
-
-  function handleLogout() {
-    navigate("/");
+    setShowToast(true);
+    setToastMessage("removed from Fav successfully");
   }
 
   return (
@@ -72,13 +76,8 @@ function Home() {
                 type="search"
                 placeholder="www.yourwebsite.com"
                 style={{ width: "374.3px", marginTop: "12px" }}
-                onChange={handleMovieSearchInput}
-                value={searchMovieName}
               />
             </label>
-            <button className="btn btn-primary mx-2" onClick={handleMovieSearch}>
-              SEARCH
-            </button>
           </div>
         </div>
         <div className="col">
@@ -86,9 +85,6 @@ function Home() {
           <p className="text-end" style={{ width: "144px" }}>
             {email}&nbsp;
           </p>
-          <button className="btn btn-danger" onClick={handleLogout}>
-            Logout
-          </button>
         </div>
       </div>
       <div className="row">
@@ -108,6 +104,13 @@ function Home() {
               Watchlists
             </h1>
           </div>
+          <div className="font-monospace">
+            <input
+              type="search"
+              placeholder="Search"
+              style={{ marginTop: "0px", marginBottom: "40px" }}
+            />
+          </div>
           <div className="font-monospace text-start">
             <button
               className="btn btn-danger fs-6"
@@ -126,12 +129,15 @@ function Home() {
           <hr />
           <div>
             <h1>My List</h1>
+
             <ul>
               {favMovieList.map((movie) => (
-                <li key={movie.Title}>
+                <li>
+                  {" "}
+                  {movie}{" "}
                   <svg
-                    onClick={() => removeFromFav(movie.Title)}
-                    className="bi bi-x"
+                    onClick={() => removeFromFav(movie)}
+                    class="bi bi-x"
                     xmlns="http://www.w3.org/2000/svg"
                     width="1em"
                     height="1em"
@@ -139,22 +145,7 @@ function Home() {
                     viewBox="0 0 16 16"
                   >
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"></path>
-                  </svg>
-                  <img
-                    src={movie.Poster}
-                    alt={movie.Title}
-                    width="50"
-                    height="75"
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setSelectedMovie(movie)}
-                  />
-                  <span>{movie.Title}</span>
-                  <button
-                    onClick={() => removeFromFav(movie.Title)}
-                    className="btn btn-danger btn-sm mx-2"
-                  >
-                    Remove
-                  </button>
+                  </svg>{" "}
                 </li>
               ))}
             </ul>
@@ -173,40 +164,58 @@ function Home() {
                     <br />
                   </p>
                 </div>
-              </div>
-              {selectedMovie ? (
-                <div className="text-center">
-                  <img
-                    src={selectedMovie.Poster}
-                    alt={selectedMovie.Title}
-                    className="img-fluid"
+
+                {showToast && (
+                  <Toast
+                    message={toastMessage}
+                    showToast={showToast}
+                    setShowToast={setShowToast}
                   />
-                  <p>
-                    {selectedMovie.Title} ({selectedMovie.Year})
-                  </p>
+                )}
+              </div>
+              <div className="row" style={{ marginBottom: "22px" }}>
+                <div className="col">
+                  <div className="input-group">
+                    <span
+                      className="input-group-text"
+                      style={{ color: "black", backgroundColor: "darkgrey" }}
+                    >
+                      Type a Movie name here&nbsp;
+                    </span>
+                    <input
+                      className="form-control"
+                      type="text"
+                      placeholder="tom cruse movie"
+                      onChange={(e) => handleMovieSearchInput(e)}
+                    />
+                    <button
+                      className="btn btn-primary"
+                      type="button"
+                      onClick={() => handleMovieSearch()}
+                    >
+                      SEARCH
+                    </button>
+                  </div>
                 </div>
-              ) : (
-                <div className="row gx-2 gy-2 row-cols-1 row-cols-md-2 row-cols-xl-3 photos">
-                  {movieList.map((movie) => (
-                    <div key={movie.imdbID} className="col item">
-                      <img
-                        className="img-fluid"
-                        src={movie.Poster}
-                        alt={movie.Title}
-                      />
-                      <p>
-                        {movie.Title} ({movie.Year})
-                      </p>
-                      <button
-                        className="btn btn-success"
-                        onClick={() => handleAddToFav(movie)}
-                      >
-                        Add to My List
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
+              </div>
+              <div
+                className="row gx-2 gy-2 row-cols-1 row-cols-md-2 row-cols-xl-3 photos"
+                data-bss-baguettebox=""
+              >
+                {movieList.map((movie, index) => (
+                  <div key={index} className="col item">
+                    <a href="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+                      <img className="img-fluid" src={movie.Poster} />
+                    </a>
+                    <p>
+                      {movie.Title} ({movie.Year})
+                    </p>
+                    <button onClick={() => handleAddToFav(movie.Title)}>
+                      Add to fav
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
         </div>
