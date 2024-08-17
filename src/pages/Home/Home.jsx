@@ -18,7 +18,7 @@ function Home() {
   async function fetchData() {
     const options = {
       method: "GET",
-      url: "http://www.omdbapi.com/?",
+      url: "https://www.omdbapi.com/?",
       params: { s: searchMovieName, page: 1, apikey: "7d13a6a5" },
     };
     try {
