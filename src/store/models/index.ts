@@ -1,13 +1,9 @@
-
 import { loginModel, LoginModel } from "./login.model";
 
+export interface Model {
+  loginModel: LoginModel;
+}
 
-export interface Model{
-   
-    loginModel: LoginModel;
-}
- 
-export const model: Model ={
-  
-    loginModel: loginModel
-}
+export const model: Model = {
+  loginModel: loginModel,
+};

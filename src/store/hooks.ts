@@ -1,12 +1,8 @@
 // hooks.js
-import { createTypedHooks } from 'easy-peasy';
-import { Model } from './models';
+import { createTypedHooks } from "easy-peasy";
+import { Model } from "./models";
 
-const { useStoreActions, useStoreState, useStoreDispatch, useStore } = createTypedHooks<Model>();
+const { useStoreActions, useStoreState, useStoreDispatch, useStore } =
+  createTypedHooks<Model>();
 
-export  {
-  useStoreActions,
-  useStoreState,
-  useStoreDispatch,
-  useStore
-}
+export { useStoreActions, useStoreState, useStoreDispatch, useStore };

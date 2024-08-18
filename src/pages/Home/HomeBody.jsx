@@ -8,7 +8,9 @@ function HomeBody(props) {
   function handleAddToFav(movieName) {
     if (props.favMovieList.includes(movieName)) {
       props.setShowToast(true);
-      props.setToastMessage("Already in the list! Please select another movie.");
+      props.setToastMessage(
+        "Already in the list! Please select another movie."
+      );
     } else {
       props.setFavMovieList([...props.favMovieList, movieName]);
       props.setShowToast(true);
@@ -75,10 +77,7 @@ function HomeBody(props) {
                 overflow: "hidden", // Ensure the zoom effect doesn't exceed the boundaries
               }}
             >
-              <a
-                href="#"
-                onClick={() => handleAddToFav(movie.Title)}
-              >
+              <a href="#" onClick={() => handleAddToFav(movie.Title)}>
                 <img
                   className="img-fluid"
                   src={movie.Poster}
@@ -87,8 +86,12 @@ function HomeBody(props) {
                     width: "200px",
                     transition: "transform 0.3s ease-in-out", // Smooth zoom effect
                   }}
-                  onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")} // Zoom in on hover
-                  onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")} // Zoom out on leave
+                  onMouseEnter={(e) =>
+                    (e.currentTarget.style.transform = "scale(1.1)")
+                  } // Zoom in on hover
+                  onMouseLeave={(e) =>
+                    (e.currentTarget.style.transform = "scale(1)")
+                  } // Zoom out on leave
                   alt={`${movie.Title} Poster`}
                 />
               </a>

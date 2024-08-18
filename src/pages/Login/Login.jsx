@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
-  const [emailId, setEmailId] = useState('');
-  const [error, setError] = useState('');
+  const [emailId, setEmailId] = useState("");
+  const [error, setError] = useState("");
   const { setEmail } = useStoreActions((actions) => actions.loginModel);
 
   function handleEmail(e) {
     setEmailId(e.target.value);
-    setError('');
+    setError("");
   }
 
   // Prevent browser back function
@@ -48,7 +48,8 @@ function Login() {
           <div className="col-md-8 col-xl-6 text-center mx-auto">
             <h2>Log in</h2>
             <p className="w-lg-50">
-              Authenticate users by email address, no need for account verification.
+              Authenticate users by email address, no need for account
+              verification.
             </p>
           </div>
         </div>
@@ -93,7 +94,6 @@ function Login() {
                         transition: "all 0.3s ease",
                       }}
                       onClick={handleLogin}
-                      
                     >
                       Get Started
                     </button>
