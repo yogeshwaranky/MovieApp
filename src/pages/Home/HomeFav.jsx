@@ -12,7 +12,7 @@ function HomeFav(props) {
       style={{
         backgroundColor: "#e6f7f7",
         color: "#ceabd4",
-        border: "2px solid #34898c", // Border similar to HomeHeader
+        border: "2px solid #34898c", 
         borderRadius: "15px",
         padding: "20px",
       }}

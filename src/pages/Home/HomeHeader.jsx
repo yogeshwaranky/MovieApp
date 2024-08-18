@@ -7,8 +7,8 @@ function HomeHeader() {
   const navigate = useNavigate();
 
   function handleLogout() {
-    setEmail(""); // Clear the email from the state
-    navigate("/"); // Redirect to the login page
+    setEmail(""); 
+    navigate("/"); 
   }
 
   return (
@@ -17,7 +17,7 @@ function HomeHeader() {
       style={{
         backgroundColor: "#e6f7f7",
         color: "#7d3216",
-        border: "2px solid #34898c", // Border similar to HomeHeader
+        border: "2px solid #34898c", 
         borderRadius: "15px",
         padding: "20px",
       }}
@@ -33,7 +33,7 @@ function HomeHeader() {
               marginLeft: "80px",
               padding: "20px 10px 10px 10px",
               fontSize: "20px",
-              color: "#7d3216", // Light text color for contrast
+              color: "#7d3216", 
             }}
           >
             Search&nbsp; :&nbsp;&nbsp;
@@ -45,8 +45,8 @@ function HomeHeader() {
                 width: "374.3px",
                 height: "30px",
                 marginTop: "12px",
-                background: "#495057", // Darker input background
-                color: "#ffffff", // Light text color for input
+                background: "#495057", 
+                color: "#ffffff", 
               }}
             />
           </label>
@@ -54,7 +54,7 @@ function HomeHeader() {
       </div>
       <div className="col" style={{ backgroundColor: "#e6f7f7" }}>
         <label
-          style={{ float: "left", color: "#7d3216", fontSize: "20px" }} // Light text color
+          style={{ float: "left", color: "#7d3216", fontSize: "20px" }} 
           className="form-label"
         >
           <svg
@@ -75,7 +75,7 @@ function HomeHeader() {
             width: "240px",
             float: "left",
             color: "#7d3216",
-            fontSize: "", // Light text color for username
+            fontSize: "", 
           }}
         >
           {email}&nbsp;
@@ -85,24 +85,24 @@ function HomeHeader() {
           style={{
             marginLeft: "10px",
             float: "right",
-            borderRadius: "15px", // Reduced border radius for a smaller button
-            padding: "6px 15px", // Reduced padding for a smaller size
-            fontSize: "14px", // Decreased font size
+            borderRadius: "15px", 
+            padding: "6px 15px", 
+            fontSize: "14px", 
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             transition: "all 0.3s ease",
-            backgroundColor: "#e6070b", // Bootstrap danger color
-            color: "#ffffff", // Light text color
+            backgroundColor: "#e6070b", 
+            color: "#ffffff",
           }}
           onClick={handleLogout}
           onMouseEnter={(e) => {
-            e.currentTarget.style.transform = "scale(1.1)"; // Zoom in on hover
-            e.currentTarget.style.backgroundColor = "#a00633"; // Darken background color on hover
+            e.currentTarget.style.transform = "scale(1.1)"; 
+            e.currentTarget.style.backgroundColor = "#a00633"; 
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "scale(1)"; // Reset zoom on leave
-            e.currentTarget.style.backgroundColor = "#dc3545"; // Reset background color
+            e.currentTarget.style.transform = "scale(1)"; 
+            e.currentTarget.style.backgroundColor = "#dc3545"; 
           }}
         >
           Logout

@@ -37,7 +37,7 @@ function HomeBody(props) {
       style={{
         backgroundColor: "#e6f7f7",
         color: "#7d3216",
-        border: "2px solid #34898c", // Border similar to HomeHeader
+        border: "2px solid #34898c", 
         borderRadius: "15px",
         padding: "20px",
       }}
@@ -74,7 +74,7 @@ function HomeBody(props) {
               key={index}
               className="col item"
               style={{
-                overflow: "hidden", // Ensure the zoom effect doesn't exceed the boundaries
+                overflow: "hidden", 
               }}
             >
               <a href="#" onClick={() => handleAddToFav(movie.Title)}>
@@ -84,7 +84,7 @@ function HomeBody(props) {
                   style={{
                     height: "200px",
                     width: "200px",
-                    transition: "transform 0.3s ease-in-out", // Smooth zoom effect
+                    transition: "transform 0.3s ease-in-out", 
                   }}
                   onMouseEnter={(e) =>
                     (e.currentTarget.style.transform = "scale(1.1)")
@@ -107,15 +107,15 @@ function HomeBody(props) {
                   padding: "8px 12px",
                   border: "none",
                   cursor: "pointer",
-                  transition: "background-color 0.3s ease, transform 0.3s ease", // Smooth button effects
+                  transition: "background-color 0.3s ease, transform 0.3s ease", 
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.backgroundColor = "#a00633"; // Darken the button on hover
-                  e.currentTarget.style.transform = "scale(1.05)"; // Slightly enlarge the button
+                  e.currentTarget.style.backgroundColor = "#a00633"; 
+                  e.currentTarget.style.transform = "scale(1.05)"; 
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.backgroundColor = "#b80739"; // Reset button color
-                  e.currentTarget.style.transform = "scale(1)"; // Reset button size
+                  e.currentTarget.style.backgroundColor = "#b80739"; 
+                  e.currentTarget.style.transform = "scale(1)"; 
                 }}
               >
                 Add to fav
