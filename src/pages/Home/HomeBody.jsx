@@ -30,7 +30,16 @@ function HomeBody(props) {
   }
 
   return (
-    <section className="photo-gallery py-4 py-xl-5">
+    <section
+      className="photo-gallery py-4 py-xl-5"
+      style={{
+        backgroundColor: "#e6f7f7",
+        color: "#7d3216",
+        border: "2px solid #34898c", // Border similar to HomeHeader
+        borderRadius: "15px",
+        padding: "20px",
+      }}
+    >
       <div className="container">
         <div className="row mb-5">
           <div className="col-md-8 col-xl-6 text-center mx-auto">
@@ -59,18 +68,53 @@ function HomeBody(props) {
           data-bss-baguettebox=""
         >
           {props.movieList.map((movie, index) => (
-            <div key={index} className="col item">
-              <a href="https://cdn.bootstrapstudio.io/placeholders/1400x800.png">
+            <div
+              key={index}
+              className="col item"
+              style={{
+                overflow: "hidden", // Ensure the zoom effect doesn't exceed the boundaries
+              }}
+            >
+              <a
+                href="#"
+                onClick={() => handleAddToFav(movie.Title)}
+              >
                 <img
                   className="img-fluid"
                   src={movie.Poster}
-                  style={{ height: "200px", width: "200px" }}
+                  style={{
+                    height: "200px",
+                    width: "200px",
+                    transition: "transform 0.3s ease-in-out", // Smooth zoom effect
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.1)")} // Zoom in on hover
+                  onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")} // Zoom out on leave
+                  alt={`${movie.Title} Poster`}
                 />
               </a>
               <p>
                 {movie.Title} ({movie.Year})
               </p>
-              <button onClick={() => handleAddToFav(movie.Title)}>
+              <button
+                onClick={() => handleAddToFav(movie.Title)}
+                style={{
+                  backgroundColor: "#b80739",
+                  color: "white",
+                  borderRadius: "25px",
+                  padding: "8px 12px",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease, transform 0.3s ease", // Smooth button effects
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.backgroundColor = "#a00633"; // Darken the button on hover
+                  e.currentTarget.style.transform = "scale(1.05)"; // Slightly enlarge the button
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.backgroundColor = "#b80739"; // Reset button color
+                  e.currentTarget.style.transform = "scale(1)"; // Reset button size
+                }}
+              >
                 Add to fav
               </button>
             </div>

@@ -84,9 +84,18 @@ function Login() {
                     <button
                       className="btn btn-primary d-block w-100"
                       type="button"
+                      style={{
+                        borderRadius: "25px",
+                        padding: "8px 20px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        transition: "all 0.3s ease",
+                      }}
                       onClick={handleLogin}
+                      
                     >
-                      Login
+                      Get Started
                     </button>
                   </div>
                 </form>

@@ -41,7 +41,7 @@ function Home() {
   useEffect(()=>{
 setTimeout(()=>{
   setShowToast(false)
-},10000)
+},6000)
   },[showToast])
 
 
